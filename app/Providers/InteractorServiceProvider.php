@@ -4,10 +4,8 @@ namespace App\Providers;
 
 use App\Src\Interactors\UserInteractor;
 use App\Src\Repositories\UserRepository;
-use App\Src\Interactors\PaymentInteractor;
-use App\Src\Repositories\OrderRepository;
-use App\Src\Interactors\PaymentApproveInteractor;
-use App\Src\Repositories\PaymentRepository;
+use App\Src\Interactors\ContactInteractor;
+use App\Src\Repositories\ContactRepository;
 use App\Src\Interactors\AuthenticationInteractor;
 use Illuminate\Support\ServiceProvider;
 
@@ -32,14 +30,9 @@ class InteractorServiceProvider extends ServiceProvider
                 'dependency' => UserRepository::class
             ],
             [
-                'class' => PaymentInteractor::class, 
-                'name' => 'App\Src\Interactors\PaymentInteractor', 
-                'dependency' => OrderRepository::class
-            ],
-            [
-                'class' => PaymentApproveInteractor::class, 
-                'name' => 'App\Src\Interactors\PaymentApproveInteractor', 
-                'dependency' => PaymentRepository::class
+                'class' => ContactInteractor::class, 
+                'name' => 'App\Src\Interactors\ContactInteractor', 
+                'dependency' => ContactRepository::class
             ]
         ];
         foreach($interactors as $interactor){

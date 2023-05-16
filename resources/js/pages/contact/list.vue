@@ -25,7 +25,7 @@
                     <td data-label="Amount">$1,190</td>
                     <td data-label="Period">03/01/2016 - 03/31/2016</td>
                     <td>
-                        <q-btn  color="secondary" label="Edit" class="q-mx-sm"/>
+                        <q-btn  color="primary" label="Edit" class="q-mx-sm"/>
                         <q-btn  color="negative" label="Delete" />
                     </td>
                 </tr>
@@ -35,7 +35,7 @@
                     <td data-label="Amount">$2,443</td>
                     <td data-label="Period">02/01/2016 - 02/29/2016</td>
                     <td>
-                        <q-btn  color="secondary" label="Edit" class="q-mx-sm"/>
+                        <q-btn  color="primary" label="Edit" class="q-mx-sm"/>
                         <q-btn  color="negative" label="Delete" />
                     </td>
                 </tr>
@@ -54,8 +54,7 @@
 </template>
 <script>
 import TableHeader from '@/components/forms/TableHeader.vue'
-import { productList } from '@/apis/product.js'
-import { mapGetters } from 'vuex'
+import { contactList } from '@/apis/contact.js'
 import ToastHelper from '@/mixins/ToastHelper.vue'
 export default {
     mixins: [ToastHelper],
@@ -66,11 +65,11 @@ export default {
         totalPage: 3
     }),
     mounted(){
-        // this.getProducts()
+        this.getContacts()
     },
     methods: {
         getContacts(){
-            productList()
+            contactList()
             .then(({data}) => {
                 this.tableContent = data
             })
@@ -79,10 +78,10 @@ export default {
             console.log(value, 'search value')
         },
         addItem(){
-            this.$router.push({name: 'contact-add'})
+            this.$router.push({name: 'contact_add'})
         },
         editItem(item){
-            this.$router.push({name: 'contact-edit', params: {id: item.id}})
+            this.$router.push({name: 'contact_edit', params: {id: item.id}})
         }
     }
 }

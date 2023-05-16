@@ -1,13 +1,13 @@
 <?php
 namespace App\Src\Repositories;
 
-use App\Models\Payment;
+use App\Models\Contact;
 
-class PaymentRepository implements RepositoryInterface {
+class ContactRepository implements RepositoryInterface {
 
-    public function __construct(Payment $user)
+    public function __construct(Contact $contact)
     {
-        $this->model = $user;
+        $this->model = $contact;
     }
 
     public function create($data)
@@ -29,6 +29,5 @@ class PaymentRepository implements RepositoryInterface {
     {
         return $this->model->findOrFail($id);
     }
-
 
 }

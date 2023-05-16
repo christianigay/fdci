@@ -15,8 +15,8 @@
                 </q-input>
                 <q-btn 
                 v-if="!hide.includes('create')"
-                @click="$emit('addItem')" outline
-                color="primary" class="q-mx-sm" size="sm" label="Add"
+                @click="$emit('addItem')"
+                color="teal" class="q-mx-sm" label="Add"
                 >
                 </q-btn>
             </q-toolbar>
