@@ -20,6 +20,16 @@ class ContactInteractor {
         return $this->repository->create($data);
     }
 
+    public function update($id, $data)
+    {
+        return $this->repository->update($id, $data);
+    }
+
+    public function contact($id)
+    {
+        return $this->repository->getById($id);
+    }
+
     public function list()
     {
         return (new ContactsSearch)->searchContacts();

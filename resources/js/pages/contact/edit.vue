@@ -1,47 +1,52 @@
 <template>
     <div class="row justify-center">
       <q-card class="col-xs-12 col-md-4 q-ma-xl q-pa-lg">
-        <div class="text-h4">Edit product</div>
+        <div class="text-h4">Edit contact</div>
 
-        <FormInput v-model:modelValue="form.name" :label="`Name`"/>
-        <FormInput v-model:modelValue="form.description" :label="`Description`"/>
-        <FormInput v-model:modelValue="form.quantity" :label="`Quantity`" :type="`number`"/>
-        <FormInput v-model:modelValue="form.price" :label="`Price`" :type="`number`"/>
+        <FormInput v-model:modelValue="form.name" label="Name" :required="true"/>
+        <FormInput v-model:modelValue="form.company" label="Company"/>
+        <FormInput v-model:modelValue="form.phone" label="Phone"/>
+        <FormInput v-model:modelValue="form.email" label="Email"/>
         <q-card-actions>
-          <q-btn @click="editProduct" color="teal" label="Save" />
+          <q-btn @click="editContact" color="teal" label="Submit" />
         </q-card-actions>
       </q-card>
     </div>
 </template>
 <script>
-import { productEdit, productGet } from '@/apis/product.js' 
+import { contactEdit, contactGet } from '@/apis/contact.js' 
 import ToastHelper from '@/mixins/ToastHelper.vue'
-
 export default {
     mixins: [ToastHelper],
     data: () => ({
         form: {
-            id: '',
             name: '',
-            description: '',
-            quantity: 0,
-            price: 0
+            company: '',
+            phone: '',
+            email: '',
         }
     }),
     mounted(){
-        this.getProduct()
+        this.getContact()
     },
     methods: {
-        getProduct(){
-            productGet(this.$route.params.id)
-            .then(({data}) => this.form = data)
+        getContact(){
+            contactGet(this.$route.params.id).then(({data}) => this.form = data)
         },
-        editProduct(){
-            if(! this.form.name) return;
-            productEdit(this.form)
-            .then(({data}) => {
-                this.showToast("Product updated", "secondary");
-                this.$router.push({name: 'product-list'})
+        editContact(){
+            if(! this.form.name) return this.showToast('Name required', "negative");
+            contactEdit(this.$route.params.id, this.form)
+            .then(() => {
+                this.showToast("Contact updated successfully", "secondary");
+                this.$router.push({name: 'contact_list'})
+            })
+            .catch((error) => {
+                let errors = error.response.data.errors
+                let keys = Object.keys(errors)
+                keys.forEach(item => {
+                    let [first] = errors[item]
+                    this.showToast(first, "negative");          
+                })
             })
         }
     }

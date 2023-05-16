@@ -28,7 +28,7 @@
                     <td data-label="Phone">{{item.phone}}</td>
                     <td data-label="Email">{{item.email}}</td>
                     <td>
-                        <q-btn  color="primary" label="Edit" class="q-mx-sm"/>
+                        <q-btn @click="editItem(item)" color="primary" label="Edit" class="q-mx-sm"/>
                         <q-btn  color="negative" label="Delete" />
                     </td>
                 </tr>
