@@ -19,21 +19,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td data-label="Account">Visa - 3412</td>
-                    <td data-label="Due Date">04/01/2016</td>
-                    <td data-label="Amount">$1,190</td>
-                    <td data-label="Period">03/01/2016 - 03/31/2016</td>
-                    <td>
-                        <q-btn  color="primary" label="Edit" class="q-mx-sm"/>
-                        <q-btn  color="negative" label="Delete" />
-                    </td>
-                </tr>
-                <tr>
-                    <td scope="row" data-label="Account">Visa - 6076</td>
-                    <td data-label="Due Date">03/01/2016</td>
-                    <td data-label="Amount">$2,443</td>
-                    <td data-label="Period">02/01/2016 - 02/29/2016</td>
+                <tr
+                v-for="item in tableContent"
+                :key="item.id"
+                >
+                    <td data-label="Name">{{item.name}}</td>
+                    <td data-label="Company">{{item.company}}</td>
+                    <td data-label="Phone">{{item.phone}}</td>
+                    <td data-label="Email">{{item.email}}</td>
                     <td>
                         <q-btn  color="primary" label="Edit" class="q-mx-sm"/>
                         <q-btn  color="negative" label="Delete" />
@@ -62,20 +55,24 @@ export default {
     data: () => ({
         current: 1,
         tableContent: [],
-        totalPage: 3
+        totalPage: 3,
+        keyword: ''
     }),
     mounted(){
         this.getContacts()
     },
     methods: {
         getContacts(){
-            contactList()
+            contactList(this.keyword)
             .then(({data}) => {
-                this.tableContent = data
+                console.log(data, 'data')
+                this.tableContent = data.data
             })
         },
         searchTable(value){
             console.log(value, 'search value')
+            this.keyword = value
+            this.getContacts()
         },
         addItem(){
             this.$router.push({name: 'contact_add'})

@@ -21,4 +21,9 @@ class ContactController extends Controller
         return response()->json(['created' => $result], 201);
     }
 
+    public function list()
+    {
+        return $this->contactInteractor->list();
+    }
+
 }

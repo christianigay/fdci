@@ -2,6 +2,7 @@
 namespace App\Src\Interactors;
 
 use App\Src\Repositories\RepositoryInterface;
+use App\Src\Searchables\ContactsSearch;
 use Illuminate\Support\Facades\Auth;
 
 class ContactInteractor {
@@ -17,6 +18,11 @@ class ContactInteractor {
     {
         $data['user_id'] = Auth::user()->id;
         return $this->repository->create($data);
+    }
+
+    public function list()
+    {
+        return (new ContactsSearch)->searchContacts();
     }
 
 }
