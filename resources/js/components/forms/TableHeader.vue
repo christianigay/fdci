@@ -16,7 +16,7 @@
                 <q-btn 
                 v-if="!hide.includes('create')"
                 @click="$emit('addItem')"
-                color="teal" class="q-mx-sm" label="Add"
+                color="teal" class="q-mx-sm" label="Add Contacts"
                 >
                 </q-btn>
             </q-toolbar>

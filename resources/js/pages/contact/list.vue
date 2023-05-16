@@ -42,6 +42,7 @@
     </div>
     <div class="q-pa-lg flex flex-center">
         <q-pagination
+        @update:model-value="updatePage"
         v-model="current"
         :max="totalPage"
         direction-links
@@ -64,18 +65,25 @@ export default {
         deleteId: 0,
         current: 1,
         tableContent: [],
-        totalPage: 3,
-        keyword: ''
+        totalPage: 1,
+        keyword: '',
+        page: 1
     }),
     mounted(){
         this.getContacts()
     },
     methods: {
+        updatePage($event){
+            console.log($event, 'event')
+            if($event) this.page = $event;
+            this.getContacts();
+        },
         getContacts(){
-            contactList(this.keyword)
+            contactList(this.keyword, this.page)
             .then(({data}) => {
-                console.log(data, 'data')
                 this.tableContent = data.data
+                this.totalPage = data.last_page
+                this.current = data.current_page
             })
         },
         searchTable(value){
