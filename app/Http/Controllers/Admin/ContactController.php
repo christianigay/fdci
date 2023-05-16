@@ -26,7 +26,13 @@ class ContactController extends Controller
     {
         $request->validated();
         $result = $this->contactInteractor->update($id, $request->all());
-        return response()->json(['created' => $result], 200);
+        return response()->json(['result' => $result], 200);
+    }
+
+    public function delete($id)
+    {
+        $result = $this->contactInteractor->delete($id);
+        return response()->json(['result' => $result], 200);
     }
 
     public function list()

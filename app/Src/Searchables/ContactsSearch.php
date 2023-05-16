@@ -36,14 +36,13 @@ class ContactsSearch
     private function searchColumns()
     {
         $columns = [
-            'user_id', 'name', 'company', 'phone', 'email'
+            'user_id', 'company', 'phone', 'email'
         ];
         if (Request()->keyword && Request()->keyword != "null") {
             $keyword = Request()->keyword;
+            $this->model->where('name', 'like',"%" . $keyword . "%");
             foreach ($columns as $column) {
-                $this->model->where(function ($query) use ($column, $keyword) {
-                    $query->where($column, 'like', "%" . $keyword . "%");
-                });
+                $this->model->orWhere($column, 'like',"%" . $keyword . "%");
             }
         }
     }

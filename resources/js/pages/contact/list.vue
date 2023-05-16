@@ -1,4 +1,9 @@
 <template>
+    <ConfirmDialog
+    :title="dialogtitle"
+    :message="dialogMessage"
+    @ok="deleteRecord"
+    />
     <div class="text-h4 q-ma-md">Contacts</div>
     <div class="q-pa-md">
         <table-header
@@ -28,8 +33,8 @@
                     <td data-label="Phone">{{item.phone}}</td>
                     <td data-label="Email">{{item.email}}</td>
                     <td>
-                        <q-btn @click="editItem(item)" color="primary" label="Edit" class="q-mx-sm"/>
-                        <q-btn  color="negative" label="Delete" />
+                        <q-btn @click="editItem(item)" color="primary" label="Edit" class="q-ma-sm"/>
+                        <q-btn @click="deleteItem(item)" color="negative" label="Delete" class="q-ma-sm"/>
                     </td>
                 </tr>
             </tbody>
@@ -47,12 +52,16 @@
 </template>
 <script>
 import TableHeader from '@/components/forms/TableHeader.vue'
-import { contactList } from '@/apis/contact.js'
+import { contactList, contactDelete } from '@/apis/contact.js'
 import ToastHelper from '@/mixins/ToastHelper.vue'
+import ConfirmDialog from '@/components/dialog/ConfirmDialog.vue'
 export default {
     mixins: [ToastHelper],
-    components: {TableHeader},
+    components: {TableHeader, ConfirmDialog},
     data: () => ({
+        dialogtitle: 'Delete', 
+        dialogMessage: 'Are you sure you want to delete?',
+        deleteId: 0,
         current: 1,
         tableContent: [],
         totalPage: 3,
@@ -79,6 +88,23 @@ export default {
         },
         editItem(item){
             this.$router.push({name: 'contact_edit', params: {id: item.id}})
+        },
+        deleteItem(item){
+            this.deleteId = item.id
+            this.$store.dispatch('ui/MODIFY_CONFIRM_DIALOG', true)
+        },
+        deleteRecord(){
+            contactDelete(this.deleteId)
+            .then(({data}) => {
+                if(data.result){
+                    this.showToast("Record deleted successfully")
+                    this.getContacts()
+                };
+            })
+            .catch(() => {
+                this.showToast("An error occured", "negative");          
+            })
+
         }
     }
 }

@@ -25,6 +25,11 @@ class ContactInteractor {
         return $this->repository->update($id, $data);
     }
 
+    public function delete($id)
+    {
+        return $this->repository->delete($id);
+    }
+
     public function contact($id)
     {
         return $this->repository->getById($id);
