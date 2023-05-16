@@ -1,5 +1,5 @@
 <template>
-    <div class="text-h4 q-ma-md">Products</div>
+    <div class="text-h4 q-ma-md">Contacts</div>
   <div class="q-pa-md">
     <data-table
     :data="tableContent"

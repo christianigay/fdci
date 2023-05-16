@@ -8,6 +8,8 @@ use App\Src\Interactors\UserInteractor;
 
 class UserController extends Controller
 {
+    protected $userInteractor;
+    
     public function __construct(UserInteractor $userInteractor){
         $this->userInteractor = $userInteractor;
     }

@@ -30,7 +30,7 @@ export default {
         apiLogin(this.form)
         .then(({data}) => {
           if(data && data.user) {
-            this.$router.push({name: 'dashboard'})
+            this.$router.push({name: 'contact_list'})
           }
         })
       }

@@ -1,17 +1,13 @@
 import { createRouter,createWebHistory} from 'vue-router'
 import home from './home'
+import contact from './contact'
 import auth from './auth'
-import payment from './payment'
-import product from './product'
-import cart from './cart'
 import Axios from 'axios'
 
 const routes = [
     ...home,
     ...auth,
-    ...payment,
-    ...product,
-    ...cart
+    ...contact
 ]
 
 const router = createRouter({

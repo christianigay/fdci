@@ -7,13 +7,8 @@
         <q-avatar>
           <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
         </q-avatar>
-        Xtendly
+        FDCI
       </q-toolbar-title>
-      <q-btn @click="$router.push({name: 'cart'})" flat round dense icon="mdi-cart">
-        <q-badge color="red" floating transparent>
-          {{ cartItems.length }}
-        </q-badge>
-      </q-btn>
       <q-btn @click="logout" flat round dense icon="mdi-power-standby" />
     </q-toolbar>
   </q-header>

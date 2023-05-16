@@ -26,7 +26,7 @@ class InsertUserRequest extends FormRequest
         return [
             'email' => 'required|unique:users|max:255|email',
             'name' => 'required|max:255',
-            'password' => 'required|min:8'
+            'password' => 'required|min:8|confirmed'
         ];
     }
 }

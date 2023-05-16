@@ -6,8 +6,8 @@ const menus = [
     },
     {
         icon: 'mdi-cards-variant',
-        title: 'Products',
-        to: '/product/list'
+        title: 'Contacts',
+        to: '/contact/list'
     },
     
   ]
