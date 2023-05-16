@@ -5,14 +5,14 @@
                 <q-toolbar-title>
                    <slot name="title"></slot>
                 </q-toolbar-title>
-                <!-- <q-input 
+                <q-input 
                     v-model="filter" placeholder="Search"
                     borderless dense debounce="300" 
                 >
                     <template v-slot:append>
                         <q-icon name="search" />
                     </template>
-                </q-input> -->
+                </q-input>
                 <q-btn 
                 v-if="!hide.includes('create')"
                 @click="$emit('addItem')" outline

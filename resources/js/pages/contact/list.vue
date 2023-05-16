@@ -1,112 +1,77 @@
 <template>
     <div class="text-h4 q-ma-md">Contacts</div>
-  <div class="q-pa-md">
-    <data-table
-    :data="tableContent"
-    :columns="columns"
-    >
-        <template v-slot:toolbar>
-          <table-header
-          :hide="[]"
-          @search="searchTable"
-          @addItem="addItem"
-          ></table-header>
-        </template>
-        <template v-slot:total_price="{item}">
-          {{getTotalPrice(item)}}
-        </template>
-        <template v-slot:action="{item}">
-          <q-btn @click="addToCart(item)" class="q-mx-sm" size="sm" label="Add to Cart`" color="teal" outline></q-btn>
-          <q-btn @click="editItem(item)" size="sm" label="Edit`" color="primary" outline></q-btn>
-        </template>
-        
-    </data-table>
-    
-  </div>
+    <div class="q-pa-md">
+        <table-header
+        :hide="[]"
+        @search="searchTable"
+        @addItem="addItem"
+        ></table-header>
+    </div>
+    <div class="q-pa-md">
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="Account">Visa - 3412</td>
+                    <td data-label="Due Date">04/01/2016</td>
+                    <td data-label="Amount">$1,190</td>
+                    <td data-label="Period">03/01/2016 - 03/31/2016</td>
+                    <td>
+                        <q-btn  color="secondary" label="Edit" class="q-mx-sm"/>
+                        <q-btn  color="negative" label="Delete" />
+                    </td>
+                </tr>
+                <tr>
+                    <td scope="row" data-label="Account">Visa - 6076</td>
+                    <td data-label="Due Date">03/01/2016</td>
+                    <td data-label="Amount">$2,443</td>
+                    <td data-label="Period">02/01/2016 - 02/29/2016</td>
+                    <td>
+                        <q-btn  color="secondary" label="Edit" class="q-mx-sm"/>
+                        <q-btn  color="negative" label="Delete" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="q-pa-lg flex flex-center">
+        <q-pagination
+        v-model="current"
+        :max="totalPage"
+        direction-links
+        boundary-links
+        color="teal"
+        />
+    </div>
 </template>
 <script>
-import DataTable from '@/components/forms/Datatable.vue'
 import TableHeader from '@/components/forms/TableHeader.vue'
 import { productList } from '@/apis/product.js'
 import { mapGetters } from 'vuex'
 import ToastHelper from '@/mixins/ToastHelper.vue'
 export default {
     mixins: [ToastHelper],
-    components: {DataTable, TableHeader},
+    components: {TableHeader},
     data: () => ({
-        columns: [
-            {
-                name: 'name',
-                required: true,
-                label: 'Name',
-                align: 'left',
-                field: row => row.name,
-                format: val => `${val}`,
-                sortable: true
-            },
-            {
-                name: 'description',
-                required: true,
-                label: 'Description',
-                align: 'left',
-                field: row => row.description,
-                format: val => `${val}`,
-                sortable: true
-            },
-            {
-                name: 'quantity',
-                required: true,
-                label: 'Quantity',
-                field: row => row.quantity,
-                format: val => `${val}`,
-                sortable: true
-            },
-            {
-                name: 'price',
-                required: true,
-                label: 'Unit Price',
-                field: row => row.price,
-                format: val => `${val}`,
-                sortable: true
-            },
-            {
-                name: "total_price",
-                align: "center",
-                label: "Total Price",
-                field: ""
-            },
-            {
-                name: "action",
-                align: "center",
-                label: "Action",
-                field: ""
-            }
-        ],
-        tableContent: []
+        current: 1,
+        tableContent: [],
+        totalPage: 3
     }),
-    computed: {
-        ...mapGetters({
-            cartItems: 'cart/cartItems'
-        })
-    },
     mounted(){
-        this.getProducts()
+        // this.getProducts()
     },
     methods: {
-        addToCart(item){
-            this.showToast("Item added to cart", "secondary");
-            this.$store.dispatch('cart/SAVE_CART_ITEM', item)
-        },
-        getTotalPrice(item){
-            if(item && item.quantity){
-                return item.quantity * item.price
-            }
-            return 0
-        },
-        getProducts(){
+        getContacts(){
             productList()
             .then(({data}) => {
-                console.log(data, 'products')
                 this.tableContent = data
             })
         },
@@ -114,11 +79,99 @@ export default {
             console.log(value, 'search value')
         },
         addItem(){
-            this.$router.push({name: 'product-add'})
+            this.$router.push({name: 'contact-add'})
         },
         editItem(item){
-            this.$router.push({name: 'product-edit', params: {id: item.id}})
+            this.$router.push({name: 'contact-edit', params: {id: item.id}})
         }
     }
 }
 </script>
+<style scoped>
+table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+}
+
+table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: .35em;
+}
+
+table th,
+table td {
+  padding: .625em;
+  text-align: center;
+}
+
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+  
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+  
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+  
+  table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* general styling */
+body {
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.25;
+}
+</style>
